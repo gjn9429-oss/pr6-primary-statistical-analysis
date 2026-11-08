@@ -1,7 +1,6 @@
 import numpy as np
-import matplotlib.pyplot as plt
-
 from block1 import characteristics, save_figure
+import matplotlib.pyplot as plt
 
 
 def run():

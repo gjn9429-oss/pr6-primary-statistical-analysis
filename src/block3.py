@@ -1,15 +1,14 @@
 import numpy as np
-import matplotlib.pyplot as plt
-
 from block1 import characteristics, save_figure
 from block2 import generate_sample
+import matplotlib.pyplot as plt
 
 
 def run():
     original = generate_sample()
     original_stats = characteristics(original)
     threshold = original_stats["mean"] + 5 * original_stats["std"]
-    # Усі 10 доданих значень строго перевищують поріг, обчислений ДО забруднення.
+    # Поріг обчислено до додавання аномалій; кожне нове значення більше за нього.
     anomalies = threshold + np.arange(1, 11) * original_stats["std"] / 2
     dirty = np.concatenate((original, anomalies))
     q1, q3 = np.percentile(dirty, [25, 75], method="linear")
@@ -38,7 +37,7 @@ def run():
     print(f"Зміна медіани: {dirty_stats['median']-original_stats['median']:.6f} мс")
 
     fig, ax = plt.subplots(figsize=(8, 4.1))
-    ax.boxplot([original, dirty, clean], vert=False,
+    ax.boxplot([original, dirty, clean], orientation="horizontal",
                tick_labels=["Початкова", "Спотворена", "Очищена"], whis=1.5,
                medianprops={"color": "#a14b30", "linewidth": 2})
     ax.axvline(upper, linestyle="--", color="#235b8e", label="Верхня межа IQR спотвореної")

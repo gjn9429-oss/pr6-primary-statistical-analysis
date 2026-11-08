@@ -1,11 +1,10 @@
 import numpy as np
-import matplotlib.pyplot as plt
-
 from block1 import characteristics, save_figure
+import matplotlib.pyplot as plt
 
 
 def generate_sample():
-    # Рівно 5% із 200 спостережень замінено сплесками, а не додано зверху.
+    # Вибірка містить 190 звичайних затримок і 10 сплесків.
     np.random.seed(42)
     regular = np.random.normal(150, 20, 190)
     spikes = np.random.uniform(200, 300, 10)
